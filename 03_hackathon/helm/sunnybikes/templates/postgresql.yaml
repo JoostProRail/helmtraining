@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: sunnybikes
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:11-alpine
+          env:
+            - name: PGPORT
+              value: {{ .Values.postgres.port | quote }}
+          envFrom:
+            - secretRef:
+                name: postgres-secret
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d/
+              name: init
+            - mountPath: /var/lib/postgresql/data
+              name: data
+              subPath: data
+          ports:
+            - containerPort: {{ .Values.postgres.port }}
+      volumes:
+        - name: init
+          configMap:
+            name: postgres-init
+        - name: data
+          persistentVolumeClaim:
+            claimName: pvc-postgres

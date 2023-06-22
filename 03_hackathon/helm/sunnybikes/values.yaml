@@ -7,3 +7,8 @@ image:
   repository: sunnybikes
   pullPolicy: IfNotPresent
   tag: latest
+sbservice:
+  port: 80
+
+postgres:
+  port: 5000
