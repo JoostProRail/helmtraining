@@ -14,4 +14,4 @@ postgres:
   port: 5000
 
 sunny:
-  replicas: 5
+  replicas: 1
