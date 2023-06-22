@@ -4,7 +4,7 @@ metadata:
   name: sunnybikes
   namespace: sunnybikes
 spec:
-  type: LoadBalancer
+  type: NodePort 
   selector:
     app: sunnybikes
   ports:
